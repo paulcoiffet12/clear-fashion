@@ -19,6 +19,7 @@ app.use(helmet());
 app.options('*', cors());
 
 app.get('/', (request, response) => {
+  console.log("test");
   response.send({'ack': true});
 });
 
