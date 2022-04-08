@@ -20,7 +20,7 @@ app.options('*', cors());
 
 app.get('/', (request, response) => {
   console.log("test");
-  response.send({'ack': true});
+  response.send({'ackz': true});
 });
 
 // All products
