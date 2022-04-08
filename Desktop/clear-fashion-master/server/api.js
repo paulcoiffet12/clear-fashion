@@ -23,6 +23,11 @@ app.get('/', (request, response) => {
   response.send({'ackz': true});
 });
 
+app.get('/test', (request, response) => {
+  console.log("test");
+  response.send({'test': true});
+});
+
 // All products
 app.get('/products', async(request, response) => {
   products = await db.findAllProducts(true)
