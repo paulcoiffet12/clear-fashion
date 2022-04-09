@@ -74,7 +74,7 @@ app.get('/products/search', async (request, response) => {
   }
 });
 
-// Find a product with its id 
+//Find a product with its id 
 app.get("/products/:id", async (request, response) => {
   try {
     let resp = await db.findProductById(request);
@@ -84,7 +84,18 @@ app.get("/products/:id", async (request, response) => {
   }
 });
 
-
+/*
+app.get("/products/:id",async (request,response)=>{
+  
+  try{
+    result = await collection.find({"_id":request.params.id})
+    response.send({"product" : result});
+  }
+  catch(error){
+    response.status(500).send(error);
+  }
+})
+*/
 
 app.listen(PORT);
 

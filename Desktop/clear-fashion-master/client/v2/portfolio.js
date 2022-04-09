@@ -8,16 +8,22 @@ let favorite_products = [];
 let currentSize = 12;
 
 
+
 // instantiate the selectors
 const selectShow = document.querySelector('#show-select');
 const selectPage = document.querySelector('#page-select');
 const sectionProducts = document.querySelector('#products');
 
 //Filters
-const selectFilterRecentProducts = document.querySelector('#filter-date-select')
-const selectFilterReasonablePrice = document.querySelector('#filter-price-select')
-const selectFilterPriceBetween50_100 = ('#filter-price-between-50-and-100-select')
-const selectFilterPriceAbove100 = ('#filter-price-above-100-select')
+const selectFilterRecentProducts = document.querySelector('#filter-date-select');
+const selectFilterReasonablePrice = document.querySelector('#filter-price-select');
+
+const selectFilterPriceBetween50_100 = document.querySelector('#filter-price-between-50-and-100-select');
+const selectFilterPriceAbove100 = document.querySelector('#filter-price-above-100-select');
+
+// const selectFilterPriceBetween50_100 = ('#filter-price-between-50-and-100-select');
+// const selectFilterPriceAbove100 = ('#filter-price-above-100-select');
+
 const selectBrand = document.querySelector('#brand-select');
 
 //Sort
@@ -56,7 +62,7 @@ const fetchProducts = async (page = 1, size = 12) => {
   try 
   {
     const response = await fetch(
-      `https://clear-fashion6.vercel.app`
+      `https://clear-fashion-api.vercel.app?page=${page}&size=${size}`
     ); 
     const body = await response.json(); 
 
@@ -332,8 +338,10 @@ function FilterByBrand(currentProducts, brandName)
         {
             filteredProducts.push(product)
         }
-    }
+    } 
+
     
+
     return filteredProducts
 }
 
@@ -393,19 +401,22 @@ function FilterByReasonablePrice(currentProducts, instruction) {
     {
         for (var product of currentProducts) 
         {
+
+            //console.log(product.price);
+
             console.log(product.price);
+
             if (product.price <= 50) 
             {
                 filteredProducts.push(product)
             }
         }
     }
-
     return filteredProducts
 }
 
 
-/*
+
 // Filter by prices between 50€ and 100€
 selectFilterPriceBetween50_100.addEventListener('change', event => {
     fetchProducts(currentPagination.currentPage, currentPagination.pageSize)
@@ -413,6 +424,28 @@ selectFilterPriceBetween50_100.addEventListener('change', event => {
         .then(() => render(FilterByPriceBetween50_100(currentProducts, event.target.value), currentPagination));
   })
   
+function FilterByPriceBetween50_100(currentProducts, instruction) 
+{
+    var filtered_products = []
+    if (instruction == "no_filter") 
+    {
+        filtered_products = [...currentProducts]
+    }
+    else 
+    {
+        for (var product of currentProducts) 
+        {
+            //console.log(product.price);
+            if ((product.price > 50) && (product.price <= 100)) 
+            {
+                filtered_products.push(product)
+            }
+        }
+    }
+return filtered_products
+}
+ 
+
   function FilterByPriceBetween50_100(currentProducts, instruction) 
   {
     var filtered_products = []
@@ -436,6 +469,7 @@ selectFilterPriceBetween50_100.addEventListener('change', event => {
   }
 
   
+
   
   // Filter by prices above 100€
   selectFilterPriceAbove100.addEventListener('change', event => {
@@ -462,10 +496,10 @@ selectFilterPriceBetween50_100.addEventListener('change', event => {
         }
       }
     }
-  
+
     return filtered_products
   }
-*/
+
 
 
 
@@ -532,7 +566,6 @@ Feature 12 - Open product link
 As a user
 I want to open product link in a new page
 So that I can buy the product easily
-
 -> On peut cliquer sur le lien dans le tableau pour ouvrir la page du produit
 */
 
@@ -589,11 +622,8 @@ function FilterByFavorite(currentProducts, instruction)
             }
         }
     }
-
     return filteredProducts
 }
-
-
 
 
 /**
@@ -625,6 +655,14 @@ const refresh = () => {
 // Supprimer toutes les options sélectionnées
 function ResetOptions()
 {
+
+    selectFilterRecentProducts.value = "no_filter";
+    selectFilterReasonablePrice.value = "no_filter";
+    selectFilterPriceBetween50_100.value = "no_filter";
+    selectFilterPriceAbove100.value = "no_filter";
+    selectBrand.value = "All";
+    selectSort.value = "no_sort";  
+    selectFilterFavorite.value = "no_filter";
     /*
     selectFilterRecentProducts.innerHTML = "No";
     selectFilterReasonablePrice.innerHTML = "No";
@@ -637,4 +675,5 @@ function ResetOptions()
 
     refresh();
     */
+
 }
